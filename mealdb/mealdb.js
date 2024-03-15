@@ -18,7 +18,7 @@ const displaySearchResult = (meals) =>{
         const div = document.createElement('div')
         div.classList.add('col')
         div.innerHTML = `
-        <div class="card">
+        <div class="card" onclick = "mealIdDetail(${meal.idMeal})">
           <img src="${meal.strMealThumb
           }" class="card-img-top" alt="...">
           <div class="card-body">
@@ -31,4 +31,31 @@ const displaySearchResult = (meals) =>{
         `
         main.appendChild(div)
     })
+}
+
+const mealIdDetail = mealId =>{
+    console.log(mealId)
+    const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`
+    fetch(url)
+    .then(res => res.json())
+    .then(data => singleMealsDetails(data.meals[0]))
+}
+
+const searchDetails = document.getElementById('search-details')
+const div = document.createElement('div')
+const singleMealsDetails = details =>{
+    console.log(details)
+    div.classList.add('card')
+    div.innerHTML = `
+    <img src="${details.strMealThumb}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">${details.
+        strMeal
+        }</h5>
+      <p class="card-text">${details.strInstructions.slice(0,150)}</p>
+      <a href="${details.strYoutube
+      }" class="btn btn-primary">Go somewhere</a>
+    </div>
+    `
+    searchDetails.appendChild(div)
 }
